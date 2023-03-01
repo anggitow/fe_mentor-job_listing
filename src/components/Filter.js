@@ -10,7 +10,7 @@ const Filter = ({ reference }) => {
 
   const handleClickRemove = (e) => {
     const valueClicked = e.currentTarget.id;
-    const index = filter.indexOf(valueClicked);
+    // const index = filter.indexOf(valueClicked);
 
     let newFilter = filter.filter(function (item) {
       return item !== valueClicked;
