@@ -12,8 +12,6 @@ function App() {
   const refFilter = useRef(null);
 
   useEffect(() => {
-    document.title = "Static Job Listings";
-
     const heightHeader = refHeader.current.clientHeight;
     const heightFilter = refFilter.current.clientHeight;
     const marginAddition = filter.length === 0 ? 40 : 0;

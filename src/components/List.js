@@ -1,8 +1,9 @@
 import ItemLanguage from "./ItemLanguage";
+import { useEffect } from "react";
 import { useDataStore } from "src/store/storeData";
 import { useFilterStore } from "src/store/storeFilter";
 import { getInitialData } from "src/utils/data";
-import { useEffect } from "react";
+import { filterData } from "src/utils/filterData";
 
 const List = ({ height }) => {
   const initialData = getInitialData();
@@ -10,8 +11,13 @@ const List = ({ height }) => {
   const { data, setData } = useDataStore();
 
   useEffect(() => {
-    setData(initialData);
-  }, [filter]);
+    if (filter.length > 0) {
+      const newData = filterData(initialData, filter);
+      setData(newData);
+    } else {
+      setData(initialData);
+    }
+  }, [filter]); // eslint-disable-line
 
   const handleClick = (e) => {
     const filterClicked = e.target.innerText;
@@ -71,19 +77,11 @@ const List = ({ height }) => {
                   <hr className="my-2 sm:hidden" />
                   <div className="w-full sm:flex sm:justify-end">
                     <div className="flex gap-2 flex-wrap items-start">
-                      <ItemLanguage onClick={handleClick}>
-                        {item.role}
-                      </ItemLanguage>
-                      <ItemLanguage onClick={handleClick}>
-                        {item.level}
-                      </ItemLanguage>
-                      {item.languages.map((language, index) => {
-                        return (
-                          <ItemLanguage key={index} onClick={handleClick}>
-                            {language}
-                          </ItemLanguage>
-                        );
-                      })}
+                      {item.languages.map((language, index) => (
+                        <ItemLanguage key={index} onClick={handleClick}>
+                          {language}
+                        </ItemLanguage>
+                      ))}
                     </div>
                   </div>
                 </div>
